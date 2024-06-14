@@ -109,6 +109,26 @@ void PageTable::cambiarDirtyBitDePagina(int numPagina) {
     }
 }
 
+bool PageTable::verificarDirtyPagina(int numPagina)
+{
+    int columnaDirtyBit = 1;
+    int numFilaElegida;
+ 
+        int j = 0;
+        for (int i = 0; i < this->columnaDirtyIdSize; i++) {
+            if (this->matrizPageTableLRU[i][j] == numPagina) {
+                numFilaElegida = i;
+                break; 
+            }
+        }
+        if (this->matrizPageTableLRU[numFilaElegida][columnaDirtyBit] == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    
+}
 /*
 void PageTable::renovarLastUsedDePagina(int numPagina) {
     int numFilaElegida;

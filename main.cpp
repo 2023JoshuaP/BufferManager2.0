@@ -22,6 +22,7 @@ void menu() {
     int opcion = 0;
     int numPagina;
     int numFrame;
+    int opcionPaginaGuardado; 
     while (opcion!=7) {
         cout << endl;
         cout << "------- Menú Principal Programa Buffer Manager -------" << endl;
@@ -43,7 +44,7 @@ void menu() {
                 cout << "Ingrese el numero de pagina que desea OBTENER (Modo Prueba 1 - 6): "<< endl;
                 cin >> numPagina;        
                 bufferManagerPrincipal.obtenerUnaPagina(numPagina);
-                
+
                 break;
             case 3:
                 bufferManagerPrincipal.mostrarPageTAble();
@@ -53,13 +54,38 @@ void menu() {
                 cout << "Ingrese el numero de la pagina a mostrale"<<endl;
                 cin >> numPagina;
                 numFrame=bufferManagerPrincipal.pageTable.getNumFrameDeUnaPagina(numPagina);
-            
+                
                 char accionEnPagina;
                 cout << "Leer (L/l) o Escribir (W/w) en pagina?: ";
                 cin >> accionEnPagina;
-                if (accionEnPagina == 'L' || accionEnPagina == 'l') {
-                    bufferManagerPrincipal.bufferPool.mostrarFramePagina(numFrame);//leer
-                    bufferManagerPrincipal.pageTable.aumentarPinCountDePagina(numPagina);
+                if (accionEnPagina == 'L' || accionEnPagina == 'l') 
+                {
+                    if (bufferManagerPrincipal.pageTable.verificarDirtyPagina(numPagina) == true)
+                    {
+                        bufferManagerPrincipal.bufferPool.mostrarFramePagina(numFrame);//leer
+                        bufferManagerPrincipal.pageTable.aumentarPinCountDePagina(numPagina);
+                    }
+                    else 
+                    {
+                        cout << "Dirty de la pagina " << numPagina << " esta en 1 , no se podra leer hasta guardar" << endl;
+                        cout << "Para continuar, desea guardar el contenido? 0/NO GUARDAR  1/GUARDAR" << endl;
+                        cin >> opcionPaginaGuardado;
+                        if (opcionPaginaGuardado == 0)
+                        {
+                            cout << "Requerimiento agregado a cola de espera." << endl;
+                        }
+                        else if (opcionPaginaGuardado == 1)
+                        {
+                            bufferManagerPrincipal.pageTable.cambiarDirtyBitDePagina(numPagina);
+                            bufferManagerPrincipal.bufferPool.agregarContenidoPaginaAbloque(numFrame, numPagina);
+                            bufferManagerPrincipal.pageTable.aumentarPinCountDePagina(numPagina);   
+                        }
+                        else
+                        {
+                            cout << "opcion invalida " << endl;
+                        }
+                        
+                    }
                     break;
                 }
                 else if (accionEnPagina == 'W' || accionEnPagina == 'w') {
@@ -68,6 +94,7 @@ void menu() {
                     bufferManagerPrincipal.pageTable.cambiarDirtyBitDePagina(numPagina);
                     break;
                 }
+                
                 break;
             case 5:
                 cout << "Ingrese el numero de la pagina a liberar (descontar PinCount)"<<endl;

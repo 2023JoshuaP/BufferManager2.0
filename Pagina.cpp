@@ -79,6 +79,9 @@ void Pagina::recogerRegistros(int numPagina) {
 
 
 void Pagina::mostrarContenidoDePagina() {
+    
+    int columnaDirtyBit = 1;
+
     for (size_t i =0 ; i < this->vectorRegistrosEnPagina.size(); i++) {
         cout << this->vectorRegistrosEnPagina[i] << endl;
     }
@@ -146,7 +149,7 @@ bool Pagina::verificarPaginaVacia() {
 }
 
 void Pagina::agregarContenido(int numPaginaEliminada) {
-    string rutaBloqueEscribir = "../Bloques/Bloque"+ to_string(numPaginaEliminada) + ".txt";
+    string rutaBloqueEscribir = "./Bloques/Bloque"+ to_string(numPaginaEliminada) + ".txt";
     ofstream rutaBloque(rutaBloqueEscribir, ios::trunc);
     if (!rutaBloque.is_open()) {
         cout<<"No abrio correctamente: "<<rutaBloqueEscribir<<endl;
@@ -158,3 +161,4 @@ void Pagina::agregarContenido(int numPaginaEliminada) {
         cout << "Contenido de pagina en memoria mandado a bloque correctamente" << endl;
     }
 }
+

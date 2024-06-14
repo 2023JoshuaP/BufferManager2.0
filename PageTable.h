@@ -39,6 +39,7 @@ class PageTable{
         void descontarPinCountApagina(int numPagina);
         void aumentarPinCountDePagina(int numPagina);
         void cambiarDirtyBitDePagina(int numPagina);
+        bool verificarDirtyPagina(int numPagina);
         //void renovarLastUsedDePagina(int numPagina);
         //void aumentarLastUsedDePagina(int numPagina);
         void aumentarRefBitDePagina(int numPagina);

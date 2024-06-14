@@ -32,6 +32,7 @@ void BufferManager::establecerLimiteDeFrames(int pesoBytesBLoque) {
     }
 }
 
+
 void BufferManager::obtenerUnaPagina(int numPagina) {
     string resultadosParaEliminacionYCambios = this->pageTable.analizarPageTableParaAgregarPagina(numPagina);
     cout << "Resultado" << resultadosParaEliminacionYCambios << endl;
@@ -127,4 +128,12 @@ void BufferManager::dejarDeUsarUnaPagina(int numPagina) {
 
 void BufferManager::liberarPinnedPagina(int numPagina) {
     this->pageTable.unpinnearPagina(numPagina);
+}
+
+void BufferManager::verificarDirtyPagina(int numPagina) {
+    this->pageTable.verificarDirtyPagina(numPagina);
+}
+
+void BufferManager::agregarContenido(int numPaginaEliminada) {
+    this->pagina.agregarContenido(numPaginaEliminada);
 }
