@@ -224,7 +224,7 @@ void PageTable::actualizarInfoDePageTableSolictandoNuevaPagina(int numPaginaActu
             }
         }
         else if (j == 2) {
-            this->aumentarPinCountDePagina(numPaginaActualizar);
+            //this->aumentarPinCountDePagina(numPaginaActualizar);
             cout << "Frame Id: " << numFilaFrameId << endl;
             cout << "Pin Count establecido." << endl;
         }

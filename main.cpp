@@ -99,7 +99,33 @@ void menu() {
             case 5:
                 cout << "Ingrese el numero de la pagina a liberar (descontar PinCount)"<<endl;
                 cin >> numPagina;
-                bufferManagerPrincipal.pageTable.descontarPinCountApagina(numPagina);
+                if (bufferManagerPrincipal.pageTable.verificarDirtyPagina(numPagina) == false)
+                {
+                    cout << "Dirty = 1 " << endl;
+                    
+                    cout << "Para continuar, desea guardar el contenido? 0/NO GUARDAR  1/GUARDAR" << endl;
+                    cin >> opcionPaginaGuardado;
+                    if (opcionPaginaGuardado == 0)
+                        {
+                            cout << "Pagina no guardada, no se descuenta pin count." << endl;
+                        }
+                    else if (opcionPaginaGuardado == 1)
+                        {
+                            bufferManagerPrincipal.pageTable.cambiarDirtyBitDePagina(numPagina);
+                            bufferManagerPrincipal.bufferPool.agregarContenidoPaginaAbloque(numFrame, numPagina);
+                             
+                            bufferManagerPrincipal.pageTable.descontarPinCountApagina(numPagina);
+                        }
+                    else
+                        {
+                            cout << "opcion invalida " << endl;
+                        }
+                }
+                else 
+                {
+                    bufferManagerPrincipal.pageTable.descontarPinCountApagina(numPagina);
+                }
+                
                 break;
             case 6:
                 cout << "Ingrese Pagina a Despinnear " << endl;
