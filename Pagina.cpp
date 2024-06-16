@@ -18,7 +18,7 @@ bool isNumber(const std::string &s) {
 void Pagina::recogerRegistros(int numPagina) {
     string numPaginaString = to_string(numPagina);
     string nameBloque = "Bloque";
-    rutaCompleta = "./Bloques/" + nameBloque + numPaginaString + ".txt";
+    rutaCompleta = "../Bloques/" + nameBloque + numPaginaString + ".txt";
     ifstream fileReadBloques(rutaCompleta);
     
     if (!fileReadBloques.is_open()) {
